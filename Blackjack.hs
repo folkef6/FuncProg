@@ -82,12 +82,21 @@ prop_size_fullDeck = size fullDeck == 52
 draw :: Deck->Hand -> (Deck, Hand) 
 draw deck hand = undefined 
 
-first :: (a, b) -> (a,b)
-first (x, y) = (x,y)
 
+shuffle :: [Double] -> Deck -> Deck
+shuffle (random:doubles) deck 
+                   | shuffle' doubles deck == [] = []
+                   | otherwise = [getCard (shuffle' doubles deck)] ++ shuffle doubles getDeck (shuffle' doubles deck)
 
+shuffle' :: [Double] -> Deck -> (Card , Deck) 
+shuffle' (random:doubles) deck 
+                   | deck == [] = []
+                   | otherwise = (deck !! (round (random/(1/(size deck))) -1), deck)
 
+getCard :: (Card, Deck) -> Card 
+getCard (card,deck) = card
 
-
+getDeck :: (Card, Deck) -> Deck
+getDeck (card,deck) = deck
 
 
